@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<p>현재 온도: <span id="temperature"></span></p>
+<p>현재 습도: <span id="humidity"></span></p>
+
+
+<img alt="실험" src="../main_img.jpg"/>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  const socket = io.connect('http://localhost:8001', {
+    path: '/socket.io',
+    transports: ['websocket'],
+  });
+  socket.on('data', function (data) {
+    //console.log(data);
+    const temp = document.querySelector('#temperature');
+    temp.textContent = data.temperature;
+    const hum = document.querySelector('#humidity');
+    hum.textContent = data.humidity;
+  });
+</script>
+{% endblock %}
