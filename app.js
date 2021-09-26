@@ -5,7 +5,6 @@ const nunjucks = require('nunjucks');
 
 const webSocket = require('./socket');
 var os = require('os'),
-    path = require('path'),
     http = require("http"),
     util = require("util"),
     chokidar = require('chokidar'),
@@ -66,11 +65,13 @@ const spawn = require('child_process').spawn;
 let proc;
 
 app.get('/', (req, res) => {
+    console.log("default");
     res.render('index');
 });
 
 app.get('/test',(req,res)=>{
-        if (req.url === "/") {
+/*	if(req.url === "/test"){
+	console.log("connected");
         res.writeHead(200, { "content-type": "text/html;charset=utf-8" });
         res.write('<!doctype html>');
         res.write('<html>');
@@ -81,15 +82,15 @@ app.get('/test',(req,res)=>{
         res.write('</html>');
         res.end();
         return;
-    }
-
-    if (req.url === "/healthcheck") {
+}
+    if (req.url === "/test/healthcheck") {
         res.statusCode = 200;
         res.end();
         return;
     };
-    if (req.url.match(/^\/.+\.jpg$/)) {
-
+    */
+    if (true) {
+	console.log("idontKnow");
         res.writeHead(200, {
             'Content-Type': 'multipart/x-mixed-replace;boundary="' + boundaryID + '"',
             'Connection': 'keep-alive',
@@ -103,7 +104,7 @@ app.get('/test',(req,res)=>{
         //
         var subscriber_token = PubSub.subscribe('MJPEG', function(msg, data) {
 
-            //console.log('sending image');
+            console.log('sending image');
 
             res.write('--' + boundaryID + '\r\n')
             res.write('Content-Type: image/jpeg\r\n');
@@ -186,3 +187,5 @@ camera
     .brightness(brightness)
     .saturation(saturation)
     .takePicture(tmpImage);
+
+console.log("script end");
