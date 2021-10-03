@@ -13,7 +13,7 @@ var os = require('os'),
     PiCamera = require('./camera.js'),
     program = require('commander'),
     pjson = require('./package.json');
-
+//parameter
 program
     .version(pjson.version)
     .description(pjson.description)
@@ -28,7 +28,7 @@ program
     .option('-t --timeout <n>', 'timeout in milliseconds between frames (default 500)', parseInt)
     .option('-v --version', 'show version')
     .parse(process.argv);
-
+//parameter
 var port = program.port || 8080,
     width = program.width || 640,
     height = program.height || 480,
@@ -88,7 +88,9 @@ app.get('/test',(req,res)=>{
         res.end();
         return;
     };
-    */
+  */
+	console.log(req.url.match(/^\/.+\.jpg$/));
+console.log("qqq");
     if (true) {
 	console.log("idontKnow");
         res.writeHead(200, {
@@ -110,7 +112,7 @@ app.get('/test',(req,res)=>{
             res.write('Content-Type: image/jpeg\r\n');
             res.write('Content-Length: ' + data.length + '\r\n');
             res.write("\r\n");
-            res.write(Buffer(data), 'binary');
+            res.write(Buffer.from(data), 'binary');
             res.write("\r\n");
         });
 
@@ -145,6 +147,7 @@ const server = app.listen(app.get('port'), () => {
 
 webSocket(server, app);
 
+//camera logic
 var tmpFile = path.resolve(path.join(tmpFolder, tmpImage));
 
 // start watching the temp image for changes
