@@ -4,7 +4,7 @@ const path = require('path');
 const nunjucks = require('nunjucks');
 const {IPCsocket, sendMsgType, recMsgType, SendMsg} = require('./socket');
 
-const webSocket = require('./socket');
+const webSocket = require('./webSocket');
 var os = require('os'),
     http = require("http"),
     util = require("util"),
