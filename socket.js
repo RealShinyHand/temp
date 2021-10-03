@@ -101,4 +101,5 @@ connect(){
 }
 
 }
-new IPCsocket().connect();
+
+module.exports = { IPCsocket, sendMsgType, recMsgType, SendMsg};

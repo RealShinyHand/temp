@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
+const {IPCsocket, sendMsgType, recMsgType, SendMsg} = require('./socket');
 
 const webSocket = require('./socket');
 var os = require('os'),
@@ -191,4 +192,6 @@ camera
     .saturation(saturation)
     .takePicture(tmpImage);
 
+const ipcSocket = new IPCsocket();
+ipcSocket.connect();
 console.log("script end");
