@@ -1,6 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<div class="ip" data-pi="{{ip}}"></div>
 <p>현재 온도: <span id="temperature"></span></p>
 <p>현재 습도: <span id="humidity"></span></p>
 <video id="test" width="300" height="300">
@@ -8,7 +9,9 @@
 </video>
 <script src="/socket.io/socket.io.js"></script>
 <script>
-  const socket = io.connect('http://localhost:8001', {
+  const divIP = document.querySelector('.ip');
+  const ip = divIP.dataset.ip;
+  const socket = io.connect(`http://${ip}}`, {
     path: '/socket.io',
     transports: ['websocket'],
   });

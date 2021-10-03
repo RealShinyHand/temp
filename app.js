@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
+const ip = require("ip");
 const {IPCsocket, sendMsgType, recMsgType, SendMsg} = require('./socket');
 
 const webSocket = require('./webSocket');
@@ -67,7 +68,7 @@ let proc;
 
 app.get('/', (req, res) => {
     console.log("default");
-    res.render('index');
+    res.render('index', { ip: ip.address() });
 });
 
 app.get('/test',(req,res)=>{
