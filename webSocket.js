@@ -1,7 +1,7 @@
 const SocketIO = require('socket.io');
 const path = require('path');
 const fs = require('fs');
-const { mobileDate } = require('socket.io');
+const { mobileData } = require('./socket');
 
 
 
@@ -20,7 +20,7 @@ module.exports = (server, app) => {
             console.error(error);
         });
         socket.interval = setInterval(() => { // 3초마다 클라이언트로 메시지 전송
-            const {temp , humid, decibel } = mobileDate.getData();
+            const {temp , humid, decibel } = mobileData.getData();
             socket.emit('data', {
                 temperature: temp,
                 humidity: humid,

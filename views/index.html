@@ -10,8 +10,9 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   const divIP = document.querySelector('.ip');
-  const ip = divIP.dataset.ip;
-  const socket = io.connect(`http://${ip}}`, {
+  const ip = divIP.dataset.pi;
+  console.log(ip);
+  const socket = io.connect(`http://${ip}:8001`, {
     path: '/socket.io',
     transports: ['websocket'],
   });

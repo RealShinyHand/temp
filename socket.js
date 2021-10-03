@@ -6,7 +6,7 @@
 var net = require('net');
 const fs = require('fs');
 
-const mobileDate = new Date();
+const mobileData = new Data();
 
 const sendMsgType = {
   empty: 0,
@@ -44,7 +44,7 @@ class IPCsocket {
     temper = chunk.temperature;
     humid = chunk.humidity;
     decibel = chunk.decibel;
-    mobileDate(temper, humid, decibel);
+    mobileData.setData(temper, humid, decibel);
     console.log(temper, humid, decibel);
   };
 
@@ -123,4 +123,4 @@ function Data() {
 
 
 
-module.exports = { IPCsocket, sendMsgType, recMsgType, SendMsg, mobileDate };
+module.exports = { IPCsocket, sendMsgType, recMsgType, SendMsg, mobileData };
