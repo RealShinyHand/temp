@@ -1,0 +1,21 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<fieldset>
+  <legend>유저 이름 설정</legend>
+  <form method="post" action="/user">
+    <label for="user-name" >유저 이름</label>
+    <input id="user-name" name="userName" type="text" required/>
+    <button type="submit">저장</button>
+  </form>
+</fieldset>
+<fieldset>
+  <legend>토큰 설정</legend>
+  <form method="post" action="/token">
+    <label for="mtoken" >토큰</label>
+    <input id="mtoken" name="mToken" type="text" required/>
+    <button type="submit">저장</button>
+  </form>
+</fieldset>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+{% endblock %}

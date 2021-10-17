@@ -70,6 +70,24 @@ app.get('/', (req, res) => {
     console.log("default");
     res.render('index', { ip: ip.address() });
 });
+app.get('/settings', (req, res) => {
+    res.render('settings');
+});
+app.get('/graph', (req, res) => {
+    res.render('graph');
+})
+
+app.post('/user', (req, res, next) => {
+    const { userName } = req.body;
+    console.log("유저 이름:", userName);
+    res.redirect('/settings');
+});
+
+app.post('/token', (req, res, next) => {
+    const { mToken } = req.body;
+    console.log("토큰:", mToken);
+    res.redirect('/settings');
+});
 
 app.get('/test',(req,res)=>{
 /*	if(req.url === "/test"){
@@ -193,6 +211,6 @@ camera
     .saturation(saturation)
     .takePicture(tmpImage);
 
-const ipcSocket = new IPCsocket();
-ipcSocket.connect();
-console.log("script end");
+// const ipcSocket = new IPCsocket();
+// ipcSocket.connect();
+// console.log("script end");
