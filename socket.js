@@ -12,7 +12,11 @@ const sendMsgType = {
   empty: 0,
   motor: 1,
   led: 2,
-  mToken: 3
+  music:3,
+  mToken: 4,
+  reqMToken:5,
+  userName:6,
+  reqUserName:7
 };
 
 const recMsgType = {
@@ -63,13 +67,14 @@ class IPCsocket {
       client.on('data', chunk => { //파이썬에서 메세지 보내면 여기로옴, 데이터 타입 JSON 
         //{"msgType":"?:number","temperature": "??","humidity":"??","decibel":"??"} msgType 나중에 확장성을 위해서
         //이쪽에서 이벤트를 통해 메세지를 직접 보낼수가 없다. 근데 python 에서 주기적으로 메세지 보내니깐 그에 응답으로 보내면되지않을까?
-        console.log("00",chunk);
+        
 	const jsonChunk = JSON.parse(chunk);
-	console.log("11:",chunk);
-	console.log("22:",jsonChunk);
         switch (jsonChunk.msgType) {
           case recMsgType.telemetry:
             this.telemetryHandle(jsonChunk);
+            break;
+          case recMsgType.reqMToken:
+            console.log(jsonChunk[value]);
             break;
           default:
             console.log("Undefined msgType");
