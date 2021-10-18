@@ -86,7 +86,8 @@ class IPCsocket {
           else {
             while (this.sendMsgBox.length > 0) {
               let sendMsg = this.sendMsgBox.pop();
-              client.write(sendMsg.getJson());
+              client.write(JSON.stringify(sendMsg));
+		console.log(JSON.stringify(sendMsg));
             }
           }
 
