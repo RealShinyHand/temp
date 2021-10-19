@@ -12,11 +12,12 @@ const sendMsgType = {
   empty: 0,
   motor: 1,
   led: 2,
-  music:3,
+  music: 3,
   mToken: 4,
-  reqMToken:5,
-  userName:6,
-  reqUserName:7
+  reqMToken: 5,
+  userName: 6,
+  reqUserName: 7,
+  reqNameAndToken:8
 };
 
 const recMsgType = {
@@ -37,6 +38,7 @@ class IPCsocket {
 
   constructor() {
     this.sendMsgBox = [];
+    this.client = null;
   }
 
   addSendMsg(commandMsg) {
@@ -51,11 +53,25 @@ class IPCsocket {
     mobileData.setData(temper, humid, decibel);
     console.log(temper, humid, decibel);
   };
+  sendMessageToPython(sendMsg) {
+
+    if(this.client != null){
+    this.client.write(JSON.stringify(sendMsg));
+    console.log(JSON.stringify(sendMsg));
+    }else{
+      console.write("클라이언트 연결없음 ")
+    }
+  }
 
   connect() {
 
     var server = net.createServer(client => { //IPC용 서버 개방//net 자체가 IPC용이다.
       const chunks = [];
+      if(this.client == null){ //혹시 몰라서
+        this.client = client;
+        console.log("IPC 서버 생성, 클라이언트 초기화")
+      }
+
       console.log(`client connected`);
       client.setEncoding('utf8');
 
@@ -67,29 +83,32 @@ class IPCsocket {
       client.on('data', chunk => { //파이썬에서 메세지 보내면 여기로옴, 데이터 타입 JSON 
         //{"msgType":"?:number","temperature": "??","humidity":"??","decibel":"??"} msgType 나중에 확장성을 위해서
         //이쪽에서 이벤트를 통해 메세지를 직접 보낼수가 없다. 근데 python 에서 주기적으로 메세지 보내니깐 그에 응답으로 보내면되지않을까?
-        
-	const jsonChunk = JSON.parse(chunk);
-        switch (jsonChunk.msgType) {
+
+        const jsonChunk = JSON.parse(chunk);
+        switch (jsonChunk.msgType) {  //메세지 받는 부분 
           case recMsgType.telemetry:
             this.telemetryHandle(jsonChunk);
             break;
-          case recMsgType.reqMToken:
+          case sendMsgType.reqMToken:
             console.log(jsonChunk[value]);
             break;
+          case sendMsgType.reqNameAndToken:
+            console.log("node socket.js 96::"+chunk);
+            
           default:
             console.log("Undefined msgType");
         }
 
-          if (this.sendMsgBox.length == 0) {
-            client.write(JSON.stringify({ msgType: sendMsgType.empty }));
-          }
-          else {
-            while (this.sendMsgBox.length > 0) {
-              let sendMsg = this.sendMsgBox.pop();
-              client.write(JSON.stringify(sendMsg));
-		console.log(JSON.stringify(sendMsg));
-            }
-          }
+        //       if (this.sendMsgBox.length == 0) { //메세지 보내는 부분 
+        //         client.write(JSON.stringify({ msgType: sendMsgType.empty }));
+        //       }
+        //       else {
+        //         while (this.sendMsgBox.length > 0) {
+        //           let sendMsg = this.sendMsgBox.pop();
+        //           client.write(JSON.stringify(sendMsg));
+        // console.log(JSON.stringify(sendMsg));
+        //         }
+        //       }
 
       });
     });
@@ -114,17 +133,17 @@ function Data() {
   this.temp = 0;
   this.humid = 0;
   this.decibel = 0;
-  
+
   this.setData = (temp, humid, decibel) => {
     this.temp = temp;
-    this.humid= humid;
+    this.humid = humid;
     this.decibel = decibel;
   }
   this.getData = () => {
     const temp = this.temp;
     const humid = this.humid;
     const decibel = this.decibel;
-    return {temp, humid, decibel};
+    return { temp, humid, decibel };
   }
 }
 

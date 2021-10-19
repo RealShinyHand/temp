@@ -71,7 +71,7 @@ app.get('/', (req, res) => {
     res.render('index', { ip: ip.address() });
 });
 app.get('/settings', (req, res) => {
-    
+    ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqNameAndToken}); //이 명령어이면 네임과 token을 전부 얻어와야함 
     res.render('settings');
 });
 app.get('/graph', (req, res) => {
@@ -81,14 +81,14 @@ app.get('/graph', (req, res) => {
 app.post('/user', (req, res, next) => {
     const { userName } = req.body;
     console.log("유저 이름:", userName);
-    ipcSocket.addSendMsg({"msgType":sendMsgType.reqUserName,"value":userName})
+    ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqUserName,"value":userName})
     res.redirect('/settings');
 });
 
 app.post('/token', (req, res, next) => {
     const { mToken } = req.body;
     console.log("토큰:", mToken);
-    ipcSocket.addSendMsg({"msgType":sendMsgType.mToken,"value":mToken});
+    ipcSocket.sendMessageToPython({"msgType":sendMsgType.mToken,"value":mToken});
     res.redirect('/settings');
 });
 
