@@ -51,13 +51,14 @@ class IPCsocket {
     humid = chunk.humidity;
     decibel = chunk.decibel;
     mobileData.setData(temper, humid, decibel);
-    console.log(temper, humid, decibel);
   };
   sendMessageToPython(sendMsg) {
-
+    if(!sendMsg){
+    console.log("node server senMsg null or empty")
+    }
     if(this.client != null){
     this.client.write(JSON.stringify(sendMsg));
-    console.log(JSON.stringify(sendMsg));
+    console.log("nodemsesage : "+JSON.stringify(sendMsg));
     }else{
       console.write("클라이언트 연결없음 ")
     }
@@ -76,6 +77,7 @@ class IPCsocket {
       client.setEncoding('utf8');
 
       client.on('end', () => {
+	this.client = null;
         console.log('client disconnected');
       });
 
@@ -96,7 +98,7 @@ class IPCsocket {
             console.log("node socket.js 96::"+chunk);
             
           default:
-            console.log("Undefined msgType");
+            console.log("Undefined msgType :" + chunk);
         }
 
         //       if (this.sendMsgBox.length == 0) { //메세지 보내는 부분 
