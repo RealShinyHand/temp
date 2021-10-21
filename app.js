@@ -81,7 +81,7 @@ app.get('/graph', (req, res) => {
 app.post('/user', (req, res, next) => {
     const { userName } = req.body;
     console.log("유저 이름:", userName);
-    ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqUserName,"value":userName})
+    ipcSocket.sendMessageToPython({"msgType":sendMsgType.userName,"value":userName})
     res.redirect('/settings');
 });
 
