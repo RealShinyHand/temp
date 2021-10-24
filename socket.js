@@ -96,6 +96,7 @@ class IPCsocket {
             break;
           case sendMsgType.reqNameAndToken:
             console.log("node socket.js 96::"+chunk);
+	    break;
           
           default:
             console.log("Undefined msgType :" + chunk);
