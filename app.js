@@ -91,6 +91,8 @@ app.post('/token', (req, res, next) => {
     ipcSocket.sendMessageToPython({"msgType":sendMsgType.mToken,"value":mToken});
     res.redirect('/settings');
 });
+//if user select mtoken that user want to delete, system have to send mToken value
+//ipcSoket.sendMessageToPython({"msgType":sendMsgType.deleteMToken,"value":mToken});
 
 app.get('/test',(req,res)=>{
 /*	if(req.url === "/test"){

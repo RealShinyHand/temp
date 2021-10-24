@@ -17,7 +17,9 @@ const sendMsgType = {
   reqMToken: 5,
   userName: 6,
   reqUserName: 7,
-  reqNameAndToken:8
+  reqNameAndToken:8,
+  reqAllTelemetry:9,
+  deleteMToken:10
 };
 
 const recMsgType = {
