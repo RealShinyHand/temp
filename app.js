@@ -75,6 +75,7 @@ app.get('/settings', (req, res) => {
     res.render('settings');
 });
 app.get('/graph', (req, res) => {
+	ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqAllTelemetry})
     res.render('graph');
 })
 
