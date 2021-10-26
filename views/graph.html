@@ -1,5 +1,44 @@
-{% extends 'layout.html' %}
+<!DOCTYPE HTML>
+<html>
 
-{% block content %}
-<h3>그래프 페이지입니다.</h3>
-{% endblock %}
+<head>
+    <script>
+        window.onload = function () {
+
+            const labels = [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+            ];
+            const data = {
+                labels: labels,
+                datasets: [{
+                    label: 'My First dataset',
+                    backgroundColor: 'rgb(255, 99, 132)',
+                    borderColor: 'rgb(255, 99, 132)',
+                    data: [0, 10, 5, 2, 20, 30, 45],
+                }]
+            };
+            const config = {
+                type: 'line',
+                data: data,
+                options: {}
+            };
+            var chart = new Chart(document.getElementById('TemperatureChartContainer'), config);
+
+        }
+
+    </script>
+</head>
+
+<body>
+    <div>
+        <canvas id="TemperatureChartContainer" style="height: 370px; width: 100%;"></canvas>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>
