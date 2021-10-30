@@ -6,6 +6,7 @@
     <div class="main">
         <canvas id="canvas">
         </canvas>
+        <img id="test">
     </div>
 </div>
 
@@ -13,6 +14,7 @@
 <script>
     const divIP = document.querySelector('.ip');
     const canvas = document.querySelector('#canvas');
+    const image = document.querySelector("#test");
     const ip = divIP.dataset.pi;
     console.log(ip);
     const socket = io.connect(`http://${ip}:8001`, {
@@ -20,11 +22,7 @@
         transports: ['websocket'],
     });
     socket.on('image', function (data) {
-        console.log(data);
-        const ctx = canvas.getContext('2d');
-        const img = new image();
-        img.src = 'data:image/jpeg;base64,' + data;
-        ctx.drawImage(img,0,0);
+        image.src=`http://${ip}:8001/socket_test-image.jpg`;
     });
 </script>
 {% endblock %}
