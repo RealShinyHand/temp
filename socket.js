@@ -5,8 +5,10 @@
 //
 var net = require('net');
 const fs = require('fs');
+const EventEmitter = require('events');
 
 const mobileData = new Data();
+const graphData = new GraphData();
 
 const sendMsgType = {
   empty: 0,
@@ -17,9 +19,9 @@ const sendMsgType = {
   reqMToken: 5,
   userName: 6,
   reqUserName: 7,
-  reqNameAndToken:8,
-  reqAllTelemetry:9,
-  deleteMToken:10
+  reqNameAndToken: 8,
+  reqAllTelemetry: 9,
+  deleteMToken: 10
 };
 
 const recMsgType = {
@@ -55,13 +57,13 @@ class IPCsocket {
     mobileData.setData(temper, humid, decibel);
   };
   sendMessageToPython(sendMsg) {
-    if(!sendMsg){
-    console.log("node server senMsg null or empty")
+    if (!sendMsg) {
+      console.log("node server senMsg null or empty")
     }
-    if(this.client != null){
-    this.client.write(JSON.stringify(sendMsg));
-    console.log("nodemsesage : "+JSON.stringify(sendMsg));
-    }else{
+    if (this.client != null) {
+      this.client.write(JSON.stringify(sendMsg));
+      console.log("nodemsesage : " + JSON.stringify(sendMsg));
+    } else {
       console.write("클라이언트 연결없음 ")
     }
   }
@@ -70,7 +72,7 @@ class IPCsocket {
 
     var server = net.createServer(client => { //IPC용 서버 개방//net 자체가 IPC용이다.
       const chunks = [];
-      if(this.client == null){ //혹시 몰라서
+      if (this.client == null) { //혹시 몰라서
         this.client = client;
         console.log("IPC 서버 생성, 클라이언트 초기화")
       }
@@ -79,7 +81,7 @@ class IPCsocket {
       client.setEncoding('utf8');
 
       client.on('end', () => {
-	this.client = null;
+        this.client = null;
         console.log('client disconnected');
       });
 
@@ -97,12 +99,13 @@ class IPCsocket {
             console.log(jsonChunk[value]);
             break;
           case sendMsgType.reqNameAndToken:
-            console.log("node socket.js 96::"+chunk);
-	    break;
-	case sendMsgType.reqAllTelemetry:
-			console.log("node get All telemetry:" + chunk);
-			break;
-          
+            console.log("node socket.js 96::" + chunk);
+            break;
+          case sendMsgType.reqAllTelemetry:
+            graphData.init(jsonChunk.data);
+            console.log("node get All telemetry:" + chunk);
+            break;
+
           default:
             console.log("Undefined msgType :" + chunk);
         }
@@ -120,7 +123,6 @@ class IPCsocket {
 
       });
     });
-
     server.on('listening', () => {
       console.log(`Server listening`);
     });
@@ -155,6 +157,48 @@ function Data() {
   }
 }
 
+class GraphData extends EventEmitter{
+  constructor() {
+    super();
+    this.temps=[];
+    this.humids =[];
+    this.decibels=[];
+    this.dates=[];
+  }
+  init(datas) {
+    console.log("type check';';;';';';"+typeof(datas[0][0]));
+    console.log(typeof(datas[0][1]));
+    console.log(typeof(datas[0][2]));
+    console.log(typeof(datas[0][3]));
+    datas.forEach(data => {
+      this.temps.push(data[0]);
+      this.humids.push(data[1]);
+      this.decibels.push(data[2]);
+      this.dates.push(data[3]);
+    });
+    this.emit('init');
+  }
+  getDatas() {
+    const temps = this.temps;
+    const humids = this.humids;
+    const decibels = this.decibels;
+    const dates = this.dates;
+    return { temps, humids, decibels, dates };
+  }
+  getTemps() {
+    return this.temps;
+  }
+  getHumids() {
+    return this.humids;
+  }
+  getDecibels() {
+    return this.decibels;
+  }
+  getDatas() {
+    return this.dates;
+  }
+}
 
 
-module.exports = { IPCsocket, sendMsgType, recMsgType, SendMsg, mobileData };
+
+module.exports = { IPCsocket, sendMsgType, recMsgType, SendMsg, mobileData, graphData };

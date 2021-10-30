@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
 const ip = require("ip");
-const {IPCsocket, sendMsgType, recMsgType, SendMsg} = require('./socket');
+const {IPCsocket, sendMsgType, recMsgType, SendMsg, graphData} = require('./socket');
 
 const webSocket = require('./webSocket');
 var os = require('os'),
@@ -75,9 +75,13 @@ app.get('/settings', (req, res) => {
     res.render('settings');
 });
 app.get('/graph', (req, res) => {
-	ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqAllTelemetry})
-    res.render('graph');
-})
+	ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqAllTelemetry});
+    graphData.on('init', () => {
+        const { temps, humids, decibels, dates } = graphData.getDatas();
+        res.render('graph', { temps, humids, decibels, dates });
+    });
+});
+
 
 app.post('/user', (req, res, next) => {
     const { userName } = req.body;
@@ -219,5 +223,5 @@ camera
     .takePicture(tmpImage);
 
 const ipcSocket = new IPCsocket();
-ipcSocket.connect();
+//ipcSocket.connect();
 console.log("script end");

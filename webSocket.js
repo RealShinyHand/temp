@@ -24,6 +24,7 @@ module.exports = (server, app) => {
             socket.emit('data', {
                 temperature: temp,
                 humidity: humid,
+                decibel
             });
         }, 3000);
     });
