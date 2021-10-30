@@ -12,12 +12,12 @@
         </div>
         <div class="graphBox">
             <div class="card">
-                <canvas id="TemperatureChartContainer2" style="height: 370px; width: 100%;"></canvas>
+                <canvas id="HumidityChartContainer" style="height: 370px; width: 100%;"></canvas>
             </div>
         </div>
         <div class="graphBox">
             <div class="card">
-                <canvas id="TemperatureChartContainer3" style="height: 370px; width: 100%;"></canvas>
+                <canvas id="DecibelChartContainer" style="height: 370px; width: 100%;"></canvas>
             </div>
         </div>
 
@@ -27,7 +27,6 @@
 {% block script %}
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-	console.log({{temps}});
     window.onload = function () {
 	    const dates ="{{dates}}";
         const labels = dates.split(',');
@@ -41,12 +40,12 @@
                 data: [{{temps}}],
             }]
         };
-        const config = {
+        const temperatureChartConfig = {
             type: 'line',
             data: data,
             options: {}
         };
-        var chart = new Chart(document.getElementById('TemperatureChartContainer'), config);
+        var chart = new Chart(document.getElementById('TemperatureChartContainer'), temperatureChartConfig);
 
 
         const data1 = {
@@ -58,28 +57,28 @@
                 data:[{{humids}}],
             }]
         };
-        const config1 = {
+        const humidityChartConfig = {
             type: 'line',
             data: data1,
             options: {}
         };
-        var chart1 = new Chart(document.getElementById('TemperatureChartContainer2'), config1);
+        var chart1 = new Chart(document.getElementById('HumidityChartContainer'), humidityChartConfig);
 
         const data2 = {
             labels: labels,
             datasets: [{
-                label: 'My First dataset',
+                label: '데시벨',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
 		    data: [{{decibels}}],
             }]
         };
-        const config2 = {
+        const decibleChartConfig = {
             type: 'line',
             data: data2,
             options: {}
         };
-        var chart = new Chart(document.getElementById('TemperatureChartContainer3'), config2);
+        var chart = new Chart(document.getElementById('DecibelChartContainer'), decibleChartConfig);
 
     }
 </script>

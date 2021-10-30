@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
 const ip = require("ip");
-const {IPCsocket, sendMsgType, recMsgType, SendMsg, GraphData} = require('./socket');
+const {IPCsocket, sendMsgType, recMsgType, SendMsg, GraphData, SettingData} = require('./socket');
 
 const webSocket = require('./webSocket');
 var os = require('os'),
@@ -72,7 +72,10 @@ app.get('/', (req, res) => {
 });
 app.get('/settings', (req, res) => {
     ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqNameAndToken}); //이 명령어이면 네임과 token을 전부 얻어와야함 
-    res.render('settings');
+    settingData.once('init', (data) => {
+        const {name, mTokens, desc} = data;
+        res.render('settings', { ...data });     
+    });
 });
 app.get('/graph', (req, res) => {
 	console.log("graph page");
@@ -148,7 +151,6 @@ console.log("qqq");
             res.write("\r\n");
             res.write(Buffer.from(data), 'binary');
             res.write("\r\n");
-            res.end();
         });
 
         //
@@ -227,6 +229,7 @@ camera
     .takePicture(tmpImage);
 
 const graphData = new GraphData();
-const ipcSocket = new IPCsocket(graphData);
+const settingData = new SettingData();
+const ipcSocket = new IPCsocket(graphData, settingData);
 ipcSocket.connect();
 console.log("script end");

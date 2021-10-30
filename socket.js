@@ -39,7 +39,7 @@ class SendMsg {
 
 class IPCsocket {
 
-  constructor(graphData) {
+  constructor(graphData, settingData) {
     this.sendMsgBox = [];
     this.client = null;
     this.graphData = graphData;
@@ -100,6 +100,7 @@ class IPCsocket {
             break;
           case sendMsgType.reqNameAndToken:
             console.log("node socket.js 96::" + chunk);
+            this.settingData.init(jsonChunk.name, jsonChunk.mTokens);
             break;
           case sendMsgType.reqAllTelemetry:
             this.graphData.init(jsonChunk.data);
@@ -157,6 +158,23 @@ function Data() {
   }
 }
 
+class SettingData extends EventEmitter {
+  constructor() {
+    super();
+    this.name = "";
+    this.mTokens = [];
+    this.desc = [];
+  }
+  init(name, mTokens) {
+    this.name = name;
+    mTokens.forEach(mToken => {
+      this.mTokens.push(mToken[0]);
+      this.desc.push(mToken[1]);
+    });
+    this.emit('init', { name: this.name, mTokens: this.mTokens, desc = this.desc });
+  }
+}
+
 class GraphData extends EventEmitter{
   constructor() {
     super();
@@ -166,10 +184,6 @@ class GraphData extends EventEmitter{
     this.dates=[];
   }
   init(datas) {
-    console.log("type check';';;';';';"+typeof(datas[0][0]));
-    console.log(typeof(datas[0][1]));
-    console.log(typeof(datas[0][2]));
-    console.log(typeof(datas[0][3]));
     datas.forEach(data => {
       this.temps.push(data[0]);
       this.humids.push(data[1]);
@@ -184,30 +198,8 @@ class GraphData extends EventEmitter{
     const dates = this.dates;
     this.emit('init',{temps, humids, decibels, dates});
   }
-  getDatas() {
-	  console.log("qweqweqweqweqwe")
-	console.log("getDatas excuted");
-    const temps = this.temps;
-    const humids = this.humids;
-    const decibels = this.decibels;
-    const dates = this.dates;
-	  cosole.log(temps);
-    return { temps, humids, decibels, dates };
-  }
-  getTemps() {
-    return this.temps;
-  }
-  getHumids() {
-    return this.humids;
-  }
-  getDecibels() {
-    return this.decibels;
-  }
-  getDatas() {
-    return this.dates;
-  }
 }
 
 
 
-module.exports = { IPCsocket, sendMsgType, recMsgType, SendMsg, mobileData, GraphData };
+module.exports = { IPCsocket, sendMsgType, recMsgType, SendMsg, mobileData, GraphData, SettingData };
