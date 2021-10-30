@@ -30,14 +30,14 @@
 	console.log({{temps}});
     window.onload = function () {
 
-        const labels = {{dates}}
+        const labels = [{{dates}}];
         const data = {
             labels: labels,
             datasets: [{
                 label: '온도',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: {{temps}},
+                data: [{{temps}}],
             }]
         };
         const config = {
@@ -54,7 +54,7 @@
                 label: '습도',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data:{{humids}},
+                data:[{{humids}}],
             }]
         };
         const config1 = {
@@ -70,7 +70,7 @@
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: {{decibel}},
+                data: [{{decibel}}],
             }]
         };
         const config2 = {
