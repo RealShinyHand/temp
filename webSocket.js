@@ -11,7 +11,7 @@ module.exports = (server, app, PubSub) => {
 
     io.on('connection', (socket) => { // 웹소켓 연결 시
         var subscriber_token = PubSub.subscribe('MJPEG', function(msg, data) {
-            socket.emit('image', data);
+            socket.emit('image', Buffer.from(data));
         });
         const req = socket.request;
         const ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
