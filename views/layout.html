@@ -1,22 +1,55 @@
 <!DOCTYPE html>
 <html>
+
 <head lang="en">
   <meta charset="UTF-8">
   <title>Document</title>
-  <link rel="stylesheet" href="/main.css">
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css" />
 </head>
+
 <body>
   <header>
-    <nav class="">
+    <div class="navigation">
       <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/test">Video</a></li>
-        <li><a href="/graph">Graph</a></li>
-        <li><a href="/settings">Settings</a></li>
+        <li>
+          <a href="#">
+            <span class="icon"><i class="fas fa-border-none"></i></span>
+            <span class="title">
+              <h2>Brand Name</h2>
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="/">
+            <span class="icon"><i class="fas fa-home"></i></span>
+            <span class="title">Home</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="icon"><i class="fas fa-video"></i></span>
+            <span class="title">Video</span>
+          </a>
+        </li>
+        <li>
+          <a href="/graph">
+            <span class="icon"><i class="fas fa-video"></i></span>
+            <span class="title">Graph</span>
+          </a>
+        </li>
+        <li>
+          <a href="/settings">
+            <span class="icon"><i class="fas fa-cogs"></i></span>
+            <span class="title">Setting</span>
+          </a>
+        </li>
       </ul>
-    </nav>
+    </div>
   </header>
-{% block content %}
-{% endblock %}
+  {% block content %}
+  {% endblock %}
+  {% block script %}
+  {% endblock %}
 </body>
 </html>
