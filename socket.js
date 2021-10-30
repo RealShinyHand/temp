@@ -171,7 +171,7 @@ class SettingData extends EventEmitter {
       this.mTokens.push(mToken[0]);
       this.desc.push(mToken[1]);
     });
-    this.emit('init', { name: this.name, mTokens: this.mTokens, desc = this.desc });
+    this.emit('init', { name: this.name, mTokens: this.mTokens, desc: this.desc });
   }
 }
 
