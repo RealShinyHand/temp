@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="ip" data-pi="{{ip}}"></div>
+    <div class="main">
+        <img />
+    </div>
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const divIP = document.querySelector('.ip');
+    const ip = divIP.dataset.pi;
+    console.log(ip);
+    const socket = io.connect(`http://${ip}:8001`, {
+        path: '/socket.io',
+        transports: ['websocket'],
+    });
+    socket.on('image', function (data) {
+        console.log(data);
+    });
+</script>
+{% endblock %}
