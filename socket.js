@@ -8,7 +8,6 @@ const fs = require('fs');
 const EventEmitter = require('events');
 
 const mobileData = new Data();
-let graphData = null; 
 
 const sendMsgType = {
   empty: 0,
@@ -40,9 +39,10 @@ class SendMsg {
 
 class IPCsocket {
 
-  constructor() {
+  constructor(graphData) {
     this.sendMsgBox = [];
     this.client = null;
+    this.graphData = graphData;
   }
 
   addSendMsg(commandMsg) {
@@ -102,8 +102,7 @@ class IPCsocket {
             console.log("node socket.js 96::" + chunk);
             break;
           case sendMsgType.reqAllTelemetry:
-            graphData = new GraphData();
-            graphData.init(jsonChunk.data);
+            this.graphData.init(jsonChunk.data);
             console.log("node get All telemetry:" + chunk);
             break;
 
@@ -158,9 +157,8 @@ function Data() {
   }
 }
 
-class GraphData extends EventEmitter{
+class GraphData{
   constructor() {
-    super();
     this.temps=[];
     this.humids =[];
     this.decibels=[];
@@ -202,4 +200,4 @@ class GraphData extends EventEmitter{
 
 
 
-module.exports = { IPCsocket, sendMsgType, recMsgType, SendMsg, mobileData, graphData };
+module.exports = { IPCsocket, sendMsgType, recMsgType, SendMsg, mobileData, GraphData };

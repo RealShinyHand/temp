@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const nunjucks = require('nunjucks');
 const ip = require("ip");
-const {IPCsocket, sendMsgType, recMsgType, SendMsg, graphData} = require('./socket');
+const {IPCsocket, sendMsgType, recMsgType, SendMsg, GraphData} = require('./socket');
 
 const webSocket = require('./webSocket');
 var os = require('os'),
@@ -222,6 +222,7 @@ camera
     .saturation(saturation)
     .takePicture(tmpImage);
 
-const ipcSocket = new IPCsocket();
+const graphData = new GraphData();
+const ipcSocket = new IPCsocket(graphData);
 ipcSocket.connect();
 console.log("script end");
