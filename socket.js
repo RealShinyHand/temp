@@ -8,7 +8,7 @@ const fs = require('fs');
 const EventEmitter = require('events');
 
 const mobileData = new Data();
-const graphData = new GraphData();
+let graphData = null; 
 
 const sendMsgType = {
   empty: 0,
@@ -102,6 +102,7 @@ class IPCsocket {
             console.log("node socket.js 96::" + chunk);
             break;
           case sendMsgType.reqAllTelemetry:
+            graphData = new GraphData();
             graphData.init(jsonChunk.data);
             console.log("node get All telemetry:" + chunk);
             break;
