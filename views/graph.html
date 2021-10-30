@@ -5,7 +5,6 @@
    
     <div class="main">
         <div class="topbar"></div>
-        <div class="ip">{{temps}}</div>
         <div class="graphBox">
             <div class="card">
                 <canvas id="TemperatureChartContainer" style="height: 370px; width: 100%;"></canvas>
@@ -31,21 +30,14 @@
 	console.log({{temps}});
     window.onload = function () {
 
-        const labels = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-        ];
+        const labels = {{dates}}
         const data = {
             labels: labels,
             datasets: [{
-                label: 'My First dataset',
+                label: '온도',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                data: {{temps}},
             }]
         };
         const config = {
@@ -56,54 +48,37 @@
         var chart = new Chart(document.getElementById('TemperatureChartContainer'), config);
 
 
-        const labels1 = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-        ];
         const data1 = {
             labels: labels,
             datasets: [{
-                label: 'My First dataset',
+                label: '습도',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                data:{{humids}},
             }]
         };
         const config1 = {
             type: 'line',
-            data: data,
+            data: data1,
             options: {}
         };
-        var chart1 = new Chart(document.getElementById('TemperatureChartContainer2'), config);
+        var chart1 = new Chart(document.getElementById('TemperatureChartContainer2'), config1);
 
-
-        const labels2 = [
-            'January',
-            'February',
-            'March',
-            'April',
-            'May',
-            'June',
-        ];
         const data2 = {
             labels: labels,
             datasets: [{
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [0, 10, 5, 2, 20, 30, 45],
+                data: {{decibel}},
             }]
         };
         const config2 = {
             type: 'line',
-            data: data,
+            data: data2,
             options: {}
         };
-        var chart = new Chart(document.getElementById('TemperatureChartContainer3'), config);
+        var chart = new Chart(document.getElementById('TemperatureChartContainer3'), config2);
 
     }
 </script>
