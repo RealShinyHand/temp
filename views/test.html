@@ -4,13 +4,14 @@
 <div class="container">
     <div class="ip" data-pi="{{ip}}"></div>
     <div class="main">
-        <img />
+        <img id="test"/>
     </div>
 </div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script>
     const divIP = document.querySelector('.ip');
+    const image = document.querySelector('#test');
     const ip = divIP.dataset.pi;
     console.log(ip);
     const socket = io.connect(`http://${ip}:8001`, {
@@ -19,6 +20,7 @@
     });
     socket.on('image', function (data) {
         console.log(data);
+        image.src = data;
     });
 </script>
 {% endblock %}
