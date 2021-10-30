@@ -20,7 +20,7 @@
     });
     socket.on('image', function (data) {
         console.log(data);
-        image.src = data;
+        image.src = 'data:image/jpeg;base64,' + data;
     });
 </script>
 {% endblock %}
