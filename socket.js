@@ -103,7 +103,7 @@ class IPCsocket {
             break;
           case sendMsgType.reqAllTelemetry:
             this.graphData.init(jsonChunk.data);
-            console.log("node get All telemetry:" + chunk);
+            //console.log("node get All telemetry:" + chunk);
             break;
 
           default:
@@ -176,13 +176,22 @@ class GraphData extends EventEmitter{
       this.decibels.push(data[2]);
       this.dates.push(data[3]);
     });
-    this.emit('init');
-  }
-  getDatas() {
+	  console.log("event fomaewrasdf");
+	  
     const temps = this.temps;
     const humids = this.humids;
     const decibels = this.decibels;
     const dates = this.dates;
+    this.emit('init',{temps, humids, decibels, dates});
+  }
+  getDatas() {
+	  console.log("qweqweqweqweqwe")
+	console.log("getDatas excuted");
+    const temps = this.temps;
+    const humids = this.humids;
+    const decibels = this.decibels;
+    const dates = this.dates;
+	  cosole.log(temps);
     return { temps, humids, decibels, dates };
   }
   getTemps() {
