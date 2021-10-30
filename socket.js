@@ -43,6 +43,7 @@ class IPCsocket {
     this.sendMsgBox = [];
     this.client = null;
     this.graphData = graphData;
+    this.settingData= settingData;
   }
 
   addSendMsg(commandMsg) {
