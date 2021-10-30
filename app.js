@@ -40,7 +40,7 @@ var port = program.port || 8080,
     contrast = program.contrast || 0,
     brightness = program.brightness || 50,
     saturation = program.saturation || 0,
-    tmpFolder = path.join(__dirname, public),
+    tmpFolder = path.join(__dirname, 'public'),
     tmpImage = pjson.name + '-image.jpg',
     localIpAddress = localIp.address(),
     boundaryID = "BOUNDARY";
@@ -139,7 +139,7 @@ console.log("qqq");
             'Connection': 'keep-alive',
             'Expires': 'Fri, 27 May 1977 00:00:00 GMT',
             'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate',
-            'Pragma': 'no-cache'
+            'Pragma': 'no-cache' 
         });
 
         //
