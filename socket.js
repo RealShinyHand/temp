@@ -157,8 +157,9 @@ function Data() {
   }
 }
 
-class GraphData{
+class GraphData extends EventEmitter{
   constructor() {
+    super();
     this.temps=[];
     this.humids =[];
     this.decibels=[];
