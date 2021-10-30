@@ -29,8 +29,9 @@
 <script>
 	console.log({{temps}});
     window.onload = function () {
-
-        const labels = [{{dates}}];
+	    const dates ="{{dates}}";
+        const labels = dates.split(',');
+	 
         const data = {
             labels: labels,
             datasets: [{
@@ -70,7 +71,7 @@
                 label: 'My First dataset',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [{{decibel}}],
+		    data: [{{decibels}}],
             }]
         };
         const config2 = {
