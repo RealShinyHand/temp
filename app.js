@@ -77,7 +77,7 @@ app.get('/settings', (req, res) => {
 app.get('/graph', (req, res) => {
 	console.log("graph page");
 	ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqAllTelemetry});
-    graphData.on('init', (datas) => {
+    graphData.once('init', (datas) => {
         const { temps, humids, decibels, dates } = datas;
 	console.log("--------"+temps);
        return res.render('graph', { temps, humids, decibels, dates });
