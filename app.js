@@ -223,5 +223,5 @@ camera
     .takePicture(tmpImage);
 
 const ipcSocket = new IPCsocket();
-//ipcSocket.connect();
+ipcSocket.connect();
 console.log("script end");
