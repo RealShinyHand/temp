@@ -3,28 +3,65 @@
 {% block content %}
 <div class="container">
   <div class="main">
-<fieldset>
-  <legend>유저 이름 설정</legend>
-  <form method="post" action="/user">
-    <label for="user-name" >유저 이름</label>
-    <input id="user-name" name="userName" type="text" required/>
-    <button type="submit">저장</button>
-  </form>
-</fieldset>
-<fieldset>
-  <legend>토큰 설정</legend>
-  <form method="post" action="/token">
-    <label for="mtoken" >토큰</label>
-    <input id="mtoken" name="mToken" type="text" required/>
-    <button type="submit">저장</button>
-  </form>
-</fieldset>
-</div>
-</div>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-  console.log({{name}});
-  console.log({{mTokens}});
-  console.log({{desc}});
-</script>
-{% endblock %}
+    <div class="topbar"></div>
+    <div class="details">
+      <div class="recentOrders">
+      <fieldset class="settingCard" >
+        <legend style="font-size: large;">유저 이름 설정</legend>
+        <p style="font-size: 20px;">{{name}}</p>
+        <form method="post" action="/user">
+          <label for="user-name">유저 이름</label>
+          <input id="user-name" name="userName" type="text" required />
+          <button class ="setButton",type="submit">변경</button>
+        </form>
+      </fieldset> 
+      </div>
+    </div>
+      <div class="details">
+      <div class="recentOrders">
+        <div class="cardHeader">
+          <h2>Mobile Token List</h2>
+
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <td>이름</td>
+              <td>MToken</td>
+              <td style="width: 20px;">Edit</td>
+            </tr>
+          </thead>
+          <tbody>
+            {% for item in desc %}
+            <tr>
+              <form method="post" action="/delete">
+                <td>{{item}}</td>
+                <td >
+                  <input name="deletedToken" type="text" value={{mTokens[loop.index-1]}} readonly style="border:0px; pointer-events: none;"/>
+                </td>
+                <td><button class="tokenButton" type="submit">삭제</button></td>
+              </form>
+            </tr>
+            {% endfor %}
+
+          </tbody>
+        </table>
+        <fieldset class="settingCard">
+          <legend>토큰 설정</legend>
+          <form method="post" action="/token">
+            <label for="desc">토큰 이름</label>
+            <input id="desc" name="desc" type="text" required />
+            <label for="mtoken">토큰</label>
+            <input id="mtoken" name="mToken" type="text" required />
+            <button type="submit">저장</button>
+          </form>
+        </fieldset>
+      </div>
+    </div>
+      
+    </div>
+  </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+  </script>
+  {% endblock %}

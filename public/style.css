@@ -130,7 +130,7 @@ body{
     width: 100%;
     padding: 20px;
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr;
 }
 
 .details .recentOrders{
@@ -170,4 +170,23 @@ body{
 
 .details .recentOrders table tbody tr td{
     padding: 9px 5px;
+}
+
+.tokenButton{
+    background: red;
+    width: 40px;
+    height: 40px;
+}
+.setButton{
+ background: #ffffff;
+ border: none;
+ margin: 0px;
+ font-size: 20px;
+}
+.setButton:hover{
+    background-color:rgb(238, 238, 238);
+}
+.settingCard{
+ padding: 10px;
+
 }

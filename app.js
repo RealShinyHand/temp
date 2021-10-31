@@ -76,6 +76,7 @@ app.get('/settings', (req, res) => {
         const {name, mTokens, desc} = data;
         res.render('settings', { ...data });     
     });
+  
 });
 app.get('/graph', (req, res) => {
 	console.log("graph page");
@@ -98,11 +99,18 @@ app.post('/user', (req, res, next) => {
 });
 
 app.post('/token', (req, res, next) => {
-    const { mToken } = req.body;
+    const { desc,mToken } = req.body;
     console.log("토큰:", mToken);
-    ipcSocket.sendMessageToPython({"msgType":sendMsgType.mToken,"value":mToken});
+    ipcSocket.sendMessageToPython({"msgType":sendMsgType.mToken,"value":mToken,"desc":desc});
     res.redirect('/settings');
 });
+app.post('/delete', (req, res, next) => {
+    const  deletedToken  = req.body;
+    console.log("토큰:", req.body);
+    ipcSocket.sendMessageToPython({"msgType":sendMsgType.deleteMToken,"value":deletedToken});
+    res.redirect('/settings')
+});
+
 //if user select mtoken that user want to delete, system have to send mToken value
 //ipcSoket.sendMessageToPython({"msgType":sendMsgType.deleteMToken,"value":mToken});
 
