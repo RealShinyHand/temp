@@ -74,6 +74,10 @@ app.get('/settings', (req, res) => {
     ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqNameAndToken}); //이 명령어이면 네임과 token을 전부 얻어와야함 
     settingData.once('init', (data) => {
         const {name, mTokens, desc,alarmConfig} = data;
+	console.log(name);
+	console.log(typeof(alarmConfig));
+	console.log(alarmConfig[0]);
+	console.log(alarmConfig["minTemper"]);
         res.render('settings', { ...data });     
     });
   
