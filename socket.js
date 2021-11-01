@@ -20,7 +20,8 @@ const sendMsgType = {
   reqUserName: 7,
   reqNameAndToken: 8,
   reqAllTelemetry: 9,
-  deleteMToken: 10
+  deleteMToken: 10,
+  alarmConfig:11
 };
 
 const recMsgType = {
@@ -101,7 +102,7 @@ class IPCsocket {
             break;
           case sendMsgType.reqNameAndToken:
             console.log("node socket.js 96::" + chunk);
-            this.settingData.init(jsonChunk.name, jsonChunk.mTokens);
+            this.settingData.init(jsonChunk.name, jsonChunk.mTokens,jsonChunk.alarmConfig);
             break;
           case sendMsgType.reqAllTelemetry:
             this.graphData.init(jsonChunk.data);
@@ -165,14 +166,16 @@ class SettingData extends EventEmitter {
     this.name = "";
     this.mTokens = [];
     this.desc = [];
+    this.alarmConfig;
   }
-  init(name, mTokens) {
+  init(name, mTokens,alarmConfig) {
     this.name = name;
+    this.alarmConfig = alarmConfig;
     mTokens.forEach(mToken => {
       this.mTokens.push(mToken[0]);
       this.desc.push(mToken[1]);
     });
-    this.emit('init', { name: this.name, mTokens: this.mTokens, desc: this.desc });
+    this.emit('init', { name: this.name, mTokens: this.mTokens, desc: this.desc,alarmConfig: this.alarmConfig  });
   }
 }
 

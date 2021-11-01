@@ -73,7 +73,7 @@ app.get('/', (req, res) => {
 app.get('/settings', (req, res) => {
     ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqNameAndToken}); //이 명령어이면 네임과 token을 전부 얻어와야함 
     settingData.once('init', (data) => {
-        const {name, mTokens, desc} = data;
+        const {name, mTokens, desc,alarmConfig} = data;
         res.render('settings', { ...data });     
     });
   
@@ -110,7 +110,11 @@ app.post('/delete', (req, res, next) => {
     ipcSocket.sendMessageToPython({"msgType":sendMsgType.deleteMToken,"value":deletedToken});
     res.redirect('/settings')
 });
-
+app.post('/alarm',(req, res, next) => {
+    console.log("토큰:",req.body);
+    ipcSocket.sendMessageToPython({"msgType":sendMsgType.alarmConfig,"value":"qwe"});
+    res.redirect('/settings');
+});
 //if user select mtoken that user want to delete, system have to send mToken value
 //ipcSoket.sendMessageToPython({"msgType":sendMsgType.deleteMToken,"value":mToken});
 
