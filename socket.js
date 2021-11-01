@@ -169,6 +169,8 @@ class SettingData extends EventEmitter {
     this.alarmConfig;
   }
   init(name, mTokens,alarmConfig) {
+    this.mTokens = [];
+    this.desc = [];
     this.name = name;
     this.alarmConfig = alarmConfig;
     mTokens.forEach(mToken => {
@@ -188,6 +190,10 @@ class GraphData extends EventEmitter{
     this.dates=[];
   }
   init(datas) {
+	  this.temps = [];
+	  this.humids=[];
+	  this.decibels=[];
+	  this.dates = [];
     datas.forEach(data => {
       this.temps.push(data[0]);
       this.humids.push(data[1]);
