@@ -41,7 +41,15 @@
         const temperatureChartConfig = {
             type: 'line',
             data: data,
-            options: {}
+            options: {
+                scales:{
+                    yAxes:[{
+                        ticks:{
+                            stepSize:0.5
+                        }
+                    }]
+                }
+            }
         };
         var chart = new Chart(document.getElementById('TemperatureChartContainer'), temperatureChartConfig);
 
@@ -58,7 +66,15 @@
         const humidityChartConfig = {
             type: 'line',
             data: data1,
-            options: {}
+            options: {
+                scales:{
+                    yAxes:[{
+                        ticks:{
+                            stepSize:0.5
+                        }
+                    }]
+                }
+            }
         };
         var chart1 = new Chart(document.getElementById('HumidityChartContainer'), humidityChartConfig);
 
@@ -74,7 +90,15 @@
         const decibleChartConfig = {
             type: 'line',
             data: data2,
-            options: {}
+            options: {
+                scales:{
+                    yAxes:[{
+                        ticks:{
+                            stepSize:1
+                        }
+                    }]
+                }
+            }
         };
         var chart = new Chart(document.getElementById('DecibelChartContainer'), decibleChartConfig);
 

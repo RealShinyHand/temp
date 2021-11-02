@@ -191,3 +191,28 @@ body{
 
 }
 
+.gridContainer{
+    width: auto;
+    display: grid;
+    padding: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: 100px;
+  }
+.gridContainer .alarmInput{
+    max-height: 30px;
+    border-color: rgb(255, 255, 255);
+    border-width: 1px;
+}
+.gridContainer label{
+    text-align :center;
+    font-weight: bold;
+}
+.gridContainer input[type="button"]{
+    height: 30px;
+    margin:0px 10px;
+}
+
+.gridContainer input[type="submit"]{
+    height: 30px;
+    margin:0px 10px;
+}

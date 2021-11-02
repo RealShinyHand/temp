@@ -74,13 +74,10 @@ app.get('/settings', (req, res) => {
     ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqNameAndToken}); //이 명령어이면 네임과 token을 전부 얻어와야함 
     settingData.once('init', (data) => {
         const {name, mTokens, desc,alarmConfig} = data;
-	console.log(name);
-	console.log(typeof(alarmConfig));
-	console.log(alarmConfig[0]);
-	console.log(alarmConfig["minTemper"]);
         res.render('settings', { ...data });     
     });
-  
+    
+   // res.render('settings', { name:"qwe",mTokens:"111",desc:"hi",alarmConfig:{"minTemper":20} });     
 });
 app.get('/graph', (req, res) => {
 	console.log("graph page");
@@ -116,7 +113,10 @@ app.post('/delete', (req, res, next) => {
 });
 app.post('/alarm',(req, res, next) => {
     console.log("토큰:",req.body);
-    ipcSocket.sendMessageToPython({"msgType":sendMsgType.alarmConfig,"value":"qwe"});
+    const {minTemper,maxTemper,minHumid,maxHumid,decibelRange} = req.body;
+    ipcSocket.sendMessageToPython({"msgType":sendMsgType.alarmConfig,"minTemper":minTemper,
+    "maxTemper":maxTemper,"minHumid":minHumid,"maxHumid":maxHumid,"decibelRange":decibelRange
+});
     res.redirect('/settings');
 });
 //if user select mtoken that user want to delete, system have to send mToken value
@@ -251,5 +251,5 @@ camera
 const graphData = new GraphData();
 const settingData = new SettingData();
 const ipcSocket = new IPCsocket(graphData, settingData);
-ipcSocket.connect();
+//ipcSocket.connect();
 console.log("script end");

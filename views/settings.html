@@ -6,18 +6,18 @@
     <div class="topbar"></div>
     <div class="details">
       <div class="recentOrders">
-      <fieldset class="settingCard" >
-        <legend style="font-size: large;">유저 이름 설정</legend>
-        <p style="font-size: 20px;">{{name}}</p>
-        <form method="post" action="/user">
-          <label for="user-name">유저 이름</label>
-          <input id="user-name" name="userName" type="text" required />
-          <button class ="setButton",type="submit">변경</button>
-        </form>
-      </fieldset> 
+        <fieldset class="settingCard">
+          <legend style="font-size: large;">유저 이름 설정</legend>
+          <p style="font-size: 20px;">{{name}}</p>
+          <form method="post" action="/user">
+            <label for="user-name">유저 이름</label>
+            <input id="user-name" name="userName" type="text" required />
+            <button class="setButton" ,type="submit">변경</button>
+          </form>
+        </fieldset>
       </div>
     </div>
-      <div class="details">
+    <div class="details">
       <div class="recentOrders">
         <div class="cardHeader">
           <h2>Mobile Token List</h2>
@@ -36,8 +36,9 @@
             <tr>
               <form method="post" action="/delete">
                 <td>{{item}}</td>
-                <td >
-                  <input name="deletedToken" type="text" value={{mTokens[loop.index-1]}} readonly style="border:0px; pointer-events: none;"/>
+                <td>
+                  <input name="deletedToken" type="text" value={{mTokens[loop.index-1]}} readonly
+                    style="border:0px; pointer-events: none;" />
                 </td>
                 <td><button class="tokenButton" type="submit">삭제</button></td>
               </form>
@@ -58,11 +59,46 @@
         </fieldset>
       </div>
     </div>
-      <p>{{alarmConfig['minTemper']}}</p>
-
+    <div class="details">
+      <div class="recentOrders">
+        <div class="cardHeader">
+          <h2>알람 설정</h2>
+        </div>
+       
+          <form method="post" action="/alarm">
+            <div class="gridContainer">
+          <label for="minTemper">하한 온도</label>
+          <input class = "alarmInput"  name="minTemper" disabled=true type = "number",id="minTemper" value="{{alarmConfig['minTemper']}}">
+          <label for="maxTemper" >상한 온도</label>
+          <input  class = "alarmInput" name="maxTemper" disabled=true type = "number", id="maxTemper" value="{{alarmConfig['maxTemper']}}">
+          <label for="minHumid">하한 습도</label>
+          <input  class = "alarmInput" name="minHumid" disabled=true type = "number",id="minHumid" value="{{alarmConfig['minHumid']}}">
+          <label for="maxHumid">상한 습도</label>
+          <input class = "alarmInput" name="maxHumid"  disabled=true type = "number",id="maxHumid" value="{{alarmConfig['maxHumid']}}">
+          <label for="decibelRange">데시벨 Range</label>
+          <input class = "alarmInput" name="decibelRange" disabled=true type = "number",id="decibelRange" value="{{alarmConfig['decibelRange']}}">
+          <input id="modifyButton" type="button" value="수정" onclick="modifyButtonClick()">
+          <input id="setButton" disabled=true type="submit" value="저장">
+        </div>  
+        </form> 
+      
+      </div>
     </div>
   </div>
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-  </script>
-  {% endblock %}
+ 
+</div>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  var modifySwitch = true;
+  function modifyButtonClick(){
+    modifySwitch = !modifySwitch;
+    let alarmInputs = document.getElementsByClassName("alarmInput");
+    let setButton = document.getElementById("setButton")
+    for (let i = 0 ; i < alarmInputs.length; i ++){
+      
+      alarmInputs[i].disabled = modifySwitch;
+    }
+   setButton.disabled = modifySwitch;
+  }
+</script>
+{% endblock %}
