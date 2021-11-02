@@ -84,7 +84,6 @@ app.get('/graph', (req, res) => {
 	ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqAllTelemetry});
     graphData.once('init', (datas) => {
         const { temps, humids, decibels, dates } = datas;
-	console.log("--------"+temps);
        return res.render('graph', { temps, humids, decibels, dates });
     });
 	console.log("graph page end");
@@ -251,5 +250,5 @@ camera
 const graphData = new GraphData();
 const settingData = new SettingData();
 const ipcSocket = new IPCsocket(graphData, settingData);
-//ipcSocket.connect();
+ipcSocket.connect();
 console.log("script end");

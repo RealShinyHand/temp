@@ -43,13 +43,10 @@
             data: data,
             options: {
                 scales:{
-                    yAxes:[{
-                        ticks:{
-                            stepSize:0.5
-                        }
-                    }]
-                }
-            }
+			y:{
+			stepSize:1
+			}  
+		}}
         };
         var chart = new Chart(document.getElementById('TemperatureChartContainer'), temperatureChartConfig);
 
