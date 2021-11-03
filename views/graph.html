@@ -26,78 +26,98 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     window.onload = function () {
-	    const dates ="{{dates}}";
+        const dates = "{{dates}}";
         const labels = dates.split(',');
-	 
+
         const data = {
             labels: labels,
             datasets: [{
                 label: '온도',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [{{temps}}],
-            }]
-        };
-        const temperatureChartConfig = {
-            type: 'line',
-            data: data,
-            options: {
-                scales:{
-			y:{
-			stepSize:1
-			}  
-		}}
-        };
-        var chart = new Chart(document.getElementById('TemperatureChartContainer'), temperatureChartConfig);
-
-
-        const data1 = {
-            labels: labels,
-            datasets: [{
-                label: '습도',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data:[{{humids}}],
-            }]
-        };
-        const humidityChartConfig = {
-            type: 'line',
-            data: data1,
-            options: {
-                scales:{
-                    yAxes:[{
-                        ticks:{
-                            stepSize:0.5
-                        }
-                    }]
-                }
+                data: [{{ temps }}],
+            yAxisID: 'y',
+        }]
+    };
+    const temperatureChartConfig = {
+        type: 'line',
+        data: data,
+        options: {
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    ticks: {
+                        // forces step size to be 50 units
+                        stepSize: 0.5
+                    }
+                },
             }
-        };
-        var chart1 = new Chart(document.getElementById('HumidityChartContainer'), humidityChartConfig);
+        }
+    };
+    var chart = new Chart(document.getElementById('TemperatureChartContainer'), temperatureChartConfig);
 
-        const data2 = {
-            labels: labels,
-            datasets: [{
-                label: '데시벨',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-		    data: [{{decibels}}],
-            }]
+
+    const data1 = {
+        labels: labels,
+        datasets: [{
+            label: '습도',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [{{ humids }}],
+        yAxisID: 'y',
+    }]
         };
-        const decibleChartConfig = {
-            type: 'line',
-            data: data2,
-            options: {
-                scales:{
-                    yAxes:[{
-                        ticks:{
-                            stepSize:1
-                        }
-                    }]
-                }
+    const humidityChartConfig = {
+        type: 'line',
+        data: data1,
+        options: {
+            scales: {
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    
+                    ticks: {
+                        // forces step size to be 50 units
+                        stepSize: 0.5
+                    }
+                },
             }
+        }
+    };
+    var chart1 = new Chart(document.getElementById('HumidityChartContainer'), humidityChartConfig);
+
+    const data2 = {
+        labels: labels,
+        datasets: [{
+            label: '데시벨',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [{{ decibels }}],
+        yAxisID: 'y',
+    }]
         };
-        var chart = new Chart(document.getElementById('DecibelChartContainer'), decibleChartConfig);
+    const decibleChartConfig = {
+        type: 'line',
+        data: data2,
+        options: {
+            scales: {
+
+                y: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                    ticks: {
+                        // forces step size to be 50 units
+                        stepSize: 1
+                    }
+                },
+            }
+        }
+    };
+    var chart = new Chart(document.getElementById('DecibelChartContainer'), decibleChartConfig);
 
     }
 </script>

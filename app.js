@@ -81,13 +81,13 @@ app.get('/settings', (req, res) => {
 });
 app.get('/graph', (req, res) => {
 	console.log("graph page");
+    
 	ipcSocket.sendMessageToPython({"msgType":sendMsgType.reqAllTelemetry});
     graphData.once('init', (datas) => {
         const { temps, humids, decibels, dates } = datas;
        return res.render('graph', { temps, humids, decibels, dates });
     });
 	console.log("graph page end");
-	return
 });
 
 
@@ -250,5 +250,5 @@ camera
 const graphData = new GraphData();
 const settingData = new SettingData();
 const ipcSocket = new IPCsocket(graphData, settingData);
-ipcSocket.connect();
+//ipcSocket.connect();
 console.log("script end");
