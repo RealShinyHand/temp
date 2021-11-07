@@ -4,26 +4,7 @@
 <div class="container">
     <div class="ip" data-pi="{{ip}}"></div>
     <div class="main">
-        <canvas id="canvas">
-        </canvas>
-        <img id="test">
+        <img id="test" src="http://{{ip}}:8001/test">
     </div>
 </div>
-
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    const divIP = document.querySelector('.ip');
-    const canvas = document.querySelector('#canvas');
-    const image = document.querySelector("#test");
-    const ip = divIP.dataset.pi;
-    console.log(ip);
-    /*const socket = io.connect(`http://${ip}:8001`, {
-        path: '/socket.io',
-        transports: ['websocket'],
-    });
-    */
-    //socket.on('image', function (data) {
-        image.src=`http://${ip}:8001/test`;
-    //});
-</script>
 {% endblock %}

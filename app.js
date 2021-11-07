@@ -34,7 +34,7 @@ program
 var port = program.port || 8080,
     width = program.width || 640,
     height = program.height || 480,
-    timeout = program.timeout || 250,
+    timeout = program.timeout || 100,
     quality = program.quality || 75,
     sharpness = program.sharpness || 0,
     contrast = program.contrast || 0,
