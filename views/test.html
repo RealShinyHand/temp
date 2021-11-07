@@ -17,12 +17,13 @@
     const image = document.querySelector("#test");
     const ip = divIP.dataset.pi;
     console.log(ip);
-    const socket = io.connect(`http://${ip}:8001`, {
+    /*const socket = io.connect(`http://${ip}:8001`, {
         path: '/socket.io',
         transports: ['websocket'],
     });
-    socket.on('image', function (data) {
-        image.src=`http://${ip}:8001/socket_test-image.jpg`;
-    });
+    */
+    //socket.on('image', function (data) {
+        image.src=`http://${ip}:8001/test`;
+    //});
 </script>
 {% endblock %}

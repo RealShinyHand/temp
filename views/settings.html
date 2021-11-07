@@ -76,7 +76,7 @@
           <label for="maxHumid">상한 습도</label>
           <input class = "alarmInput" name="maxHumid"  disabled=true type = "number",id="maxHumid" value="{{alarmConfig['maxHumid']}}">
           <label for="decibelRange">데시벨 Range</label>
-          <input class = "alarmInput" name="decibelRange" disabled=true type = "number",id="decibelRange" value="{{alarmConfig['decibelRange']}}">
+          <input class = "alarmInput" name="decibelRange" disabled=true type = "number" step ='0.01',id="decibelRange" value="{{alarmConfig['decibelRange']}}">
           <input id="modifyButton" type="button" value="수정" onclick="modifyButtonClick()">
           <input id="setButton" disabled=true type="submit" value="저장">
         </div>  

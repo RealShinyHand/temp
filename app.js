@@ -124,50 +124,7 @@ app.post('/alarm',(req, res, next) => {
 app.get('/test1', (req, res) => {
     res.render('test', { ip: ip.address() });
 });
-app.get('/test2', (req, res) => {
 
-    
-	if(req.url === "/test2"){
-	console.log("connected");
-        res.writeHead(200, { "content-type": "text/html;charset=utf-8" });
-        res.write('<!doctype html>');
-        res.write('<html>');
-        res.write('<head><title>' + pjson.name + '</title><meta charset="utf-8" /></head>');
-        res.write('<body>');
-        res.write('<img src="image.jpg" />');
-        res.write('</body>');
-        res.write('</html>');
-}
-  
-        if (true) {
-            res.writeHead(200, {
-                'Content-Type': 'multipart/x-mixed-replace;boundary="' + boundaryID + '"',
-                'Connection': 'keep-alive',
-                'Expires': 'Fri, 27 May 1977 00:00:00 GMT',
-                'Cache-Control': 'no-cache, no-store, max-age=0, must-revalidate',
-                'Pragma': 'no-cache' 
-            });
-    
-            var subscriber_token = PubSub.subscribe('MJPEG', function(msg, data) {
-    
-                console.log('sending image');
-    
-                res.write('--' + boundaryID + '\r\n')
-                res.write('Content-Type: image/jpeg\r\n');
-                res.write('Content-Length: ' + data.length + '\r\n');
-                res.write("\r\n");
-                res.write(Buffer.from(data), 'binary');
-                res.write("\r\n");
-            });
-            res.on('close', function() {
-                console.log("Connection closed!");
-                PubSub.unsubscribe(subscriber_token);
-                res.end();
-            });
-        }
-    }
-
-);
 app.get('/test',(req,res)=>{
 /*	if(req.url === "/test"){
 	console.log("connected");
@@ -188,10 +145,7 @@ app.get('/test',(req,res)=>{
         return;
     };
   */
-	console.log(req.url.match(/^\/.+\.jpg$/));
-console.log("qqq");
     if (true) {
-	console.log("idontKnow");
         res.writeHead(200, {
             'Content-Type': 'multipart/x-mixed-replace;boundary="' + boundaryID + '"',
             'Connection': 'keep-alive',
@@ -205,7 +159,6 @@ console.log("qqq");
         //
         var subscriber_token = PubSub.subscribe('MJPEG', function(msg, data) {
 
-            console.log('sending image');
 
             res.write('--' + boundaryID + '\r\n')
             res.write('Content-Type: image/jpeg\r\n');
@@ -293,5 +246,5 @@ camera
 const graphData = new GraphData();
 const settingData = new SettingData();
 const ipcSocket = new IPCsocket(graphData, settingData);
-//ipcSocket.connect();
+ipcSocket.connect();
 console.log("script end");
