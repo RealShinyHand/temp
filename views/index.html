@@ -14,7 +14,6 @@
                     <div id="temperature" class="numbers">온도값</div>
                     <div class="cardName">온도 타이틀</div>
                 </div>
-
             </div>
             <div class="card">
                 <div class="iconBox">
@@ -36,71 +35,22 @@
                 </div>
 
             </div>
-            <div class="card">
-                <div class="iconBox">
-
-                </div>
-                <div>
-                    <div class="numbers">1042</div>
-                    <div class="cardName">Daily Views</div>
-                </div>
-
-            </div>
         </div>
         <div class="details">
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Recent Orders</h2>
-
+                    <h2>Pi Camera</h2>
                 </div>
-                <table>
-                    <thead>
-                        <tr>
-                            <td>Name</td>
-                            <td>Price</td>
-                            <td>Payment</td>
-                            <td>Status</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Star Refrigenrator</td>
-                            <td>$1200</td>
-                            <td>Paid</td>
-                            <td>Deliver</td>
-                        </tr>
-                        <tr>
-                            <td>Star Refrigenrator</td>
-                            <td>$1200</td>
-                            <td>Paid</td>
-                            <td>Deliver</td>
-                        </tr>
-                        <tr>
-                            <td>Star Refrigenrator</td>
-                            <td>$1200</td>
-                            <td>Paid</td>
-                            <td>Deliver</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="imgBx">
+                    <img id="test" src="http://{{ip}}:8001/test" />
+                    <!--http://{{ip}}:8001/test-->
+                </div>
             </div>
-            <div class="recentCustomers">
-                <div class="cardHeader">
-                    <h2>Recent Costomers</h2>
-
-                </div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx">
-                                    <img id="test" src="http://{{ip}}:8001/test">
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-
+            <div class="recentOrders">
+            <div class="cardHeader">
+            <h2>Current User</h2><h3 class="current-user-number"></h3>
+            </div>
+            <div class="current-users"></div>
             </div>
         </div>
     </div>
@@ -124,6 +74,15 @@
     hum.textContent = data.humidity;
     const decibel = document.querySelector('#decibel');
     decibel.textContent = data.decibel;
+  });
+  socket.on('user', function(data) {
+    const currentUser = data.currentUser.reduce((acc, el) => {
+        return acc+`<div class="user-item">${el}</div>`;
+    }, '');
+    const current = document.querySelector('.current-users');
+    const currentUserNumber = document.querySelector('.current-user-number');
+    current.innerHTML = currentUser;
+    currentUserNumber.innerText = data.currentUser.length+'명';
   });
 </script>
 {% endblock %}
