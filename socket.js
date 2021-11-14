@@ -101,12 +101,11 @@ class IPCsocket {
             console.log(jsonChunk[value]);
             break;
           case sendMsgType.reqNameAndToken:
-            console.log("node socket.js 96::" + chunk);
+            console.log("node socket.js 96::");
             this.settingData.init(jsonChunk.name, jsonChunk.mTokens,jsonChunk.alarmConfig);
             break;
           case sendMsgType.reqAllTelemetry:
             this.graphData.init(jsonChunk.data);
-            //console.log("node get All telemetry:" + chunk);
             break;
 
           default:
@@ -200,7 +199,6 @@ class GraphData extends EventEmitter{
       this.decibels.push(data[2]);
       this.dates.push(data[3]);
     });
-	  console.log("event fomaewrasdf");
 	  
     const temps = this.temps;
     const humids = this.humids;
