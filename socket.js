@@ -73,7 +73,8 @@ class IPCsocket {
   connect() {
 
     var server = net.createServer(client => { //IPC용 서버 개방//net 자체가 IPC용이다.
-      const chunks = [];
+      let chunks;
+      
       if (this.client == null) { //혹시 몰라서
         this.client = client;
         console.log("IPC 서버 생성, 클라이언트 초기화")
@@ -84,15 +85,7 @@ class IPCsocket {
 
       client.on('end', () => {
         this.client = null;
-        console.log('client disconnected');
-      });
-
-
-      client.on('data', chunk => { //파이썬에서 메세지 보내면 여기로옴, 데이터 타입 JSON 
-        //{"msgType":"?:number","temperature": "??","humidity":"??","decibel":"??"} msgType 나중에 확장성을 위해서
-        //이쪽에서 이벤트를 통해 메세지를 직접 보낼수가 없다. 근데 python 에서 주기적으로 메세지 보내니깐 그에 응답으로 보내면되지않을까?
-
-        const jsonChunk = JSON.parse(chunk);
+        const jsonChunk = JSON.parse(chunks);
         switch (jsonChunk.msgType) {  //메세지 받는 부분 
           case recMsgType.telemetry:
             this.telemetryHandle(jsonChunk);
@@ -111,6 +104,16 @@ class IPCsocket {
           default:
             console.log("Undefined msgType :" + chunk);
         }
+        console.log('client disconnected');
+        chucks=null;
+      });
+
+
+      client.on('data', chunk => { //파이썬에서 메세지 보내면 여기로옴, 데이터 타입 JSON 
+        //{"msgType":"?:number","temperature": "??","humidity":"??","decibel":"??"} msgType 나중에 확장성을 위해서
+        //이쪽에서 이벤트를 통해 메세지를 직접 보낼수가 없다. 근데 python 에서 주기적으로 메세지 보내니깐 그에 응답으로 보내면되지않을까?
+        chucks += chunk;
+        
 
         //       if (this.sendMsgBox.length == 0) { //메세지 보내는 부분 
         //         client.write(JSON.stringify({ msgType: sendMsgType.empty }));
