@@ -85,7 +85,14 @@ class IPCsocket {
 
       client.on('end', () => {
         this.client = null;
-        const jsonChunk = JSON.parse(chunks);
+        console.log('client disconnected');
+      });
+
+
+      client.on('data', chunk => { //파이썬에서 메세지 보내면 여기로옴, 데이터 타입 JSON 
+        //{"msgType":"?:number","temperature": "??","humidity":"??","decibel":"??"} msgType 나중에 확장성을 위해서
+        //이쪽에서 이벤트를 통해 메세지를 직접 보낼수가 없다. 근데 python 에서 주기적으로 메세지 보내니깐 그에 응답으로 보내면되지않을까?
+        const jsonChunk = JSON.parse(chunk);
         switch (jsonChunk.msgType) {  //메세지 받는 부분 
           case recMsgType.telemetry:
             this.telemetryHandle(jsonChunk);
@@ -104,15 +111,6 @@ class IPCsocket {
           default:
             console.log("Undefined msgType :" + chunk);
         }
-        console.log('client disconnected');
-        chucks=null;
-      });
-
-
-      client.on('data', chunk => { //파이썬에서 메세지 보내면 여기로옴, 데이터 타입 JSON 
-        //{"msgType":"?:number","temperature": "??","humidity":"??","decibel":"??"} msgType 나중에 확장성을 위해서
-        //이쪽에서 이벤트를 통해 메세지를 직접 보낼수가 없다. 근데 python 에서 주기적으로 메세지 보내니깐 그에 응답으로 보내면되지않을까?
-        chucks += chunk;
         
 
         //       if (this.sendMsgBox.length == 0) { //메세지 보내는 부분 
